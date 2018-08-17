@@ -10,6 +10,7 @@
 #include "types.h"
 #include "const.h"
 #include "util.h"
+#include <ctype.h>
 
 // TODO: implement
 int serial_binsearch() {
@@ -33,7 +34,44 @@ int main(int argc, char** argv) {
            sysconf(_SC_NPROCESSORS_ONLN));
 
     /* TODO: parse arguments with getopt */
+    int eflag = 0;
+    int tflag = 0;
+    int pflag = 0;
+    int c;
+    int index = 0;
 
+    int evalue = 0;
+    int tvalue = 0;
+    int pvalue = 0;
+
+    while((c = getopt(argc, argv, "T:P:E:")) != -1){
+      switch(c){
+        case 'T':
+          tflag = 1;
+          tvalue = atoi(optarg);
+          break;
+        case 'P':
+          pflag = 1;
+          pvalue = atoi(optarg);
+          break;
+        case 'E':
+          eflag = 1;
+          evalue = atoi(optarg);
+          break;
+        case '?':
+          if (optopt == 'c')
+            fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+          else if (isprint (optopt))
+            fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+          else
+            fprintf (stderr,
+                    "Unknown option character `\\x%x'.\n",
+                    optopt);
+      }
+    }
+    fprintf(stdout, "eflag: %d, evalue: %d, tflag: %d, tvalue: %d, pflag: %d, pvalue: %d\n", eflag, evalue, tflag, tvalue, pflag, pvalue);
+    for (index = optind; index < argc; index++)
+      printf ("Non-option argument %s\n", argv[index]);
     /* TODO: start datagen here as a child process. */
 
     /* TODO: implement code for your experiments using data provided by datagen and your
