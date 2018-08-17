@@ -88,6 +88,7 @@ int main(int argc, char** argv) {
       myargs[1] = NULL;
 
       execvp(myargs[0], myargs);
+      free(myargs[0]);
     }
     else {  // parent
       fprintf(stdout, "[%d]: parent\n", (int) getpid());
