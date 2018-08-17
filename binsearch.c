@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
           evalue = atoi(optarg);
           break;
         case '?':
-          if (optopt == 'c')
+          if (optopt == 'E')
             fprintf (stderr, "Option -%c requires an argument.\n", optopt);
           else if (isprint (optopt))
             fprintf (stderr, "Unknown option `-%c'.\n", optopt);
@@ -72,6 +72,7 @@ int main(int argc, char** argv) {
     fprintf(stdout, "eflag: %d, evalue: %d, tflag: %d, tvalue: %d, pflag: %d, pvalue: %d\n", eflag, evalue, tflag, tvalue, pflag, pvalue);
     for (index = optind; index < argc; index++)
       printf ("Non-option argument %s\n", argv[index]);
+
     /* TODO: start datagen here as a child process. */
 
     /* TODO: implement code for your experiments using data provided by datagen and your
