@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -std=c11 -Wall
+CFLAGS= -std=c11 -Wall -Werror
 
 all: binsearch datagen
 

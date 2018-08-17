@@ -74,6 +74,25 @@ int main(int argc, char** argv) {
       printf ("Non-option argument %s\n", argv[index]);
 
     /* TODO: start datagen here as a child process. */
+    int rc = fork();
+
+    if (rc < 0){  // fork failed
+      fprintf(stderr, "fork failed\n");
+      exit(1);
+    }
+    else if (rc == 0){  // child run datagen
+      fprintf(stdout, "[%d]: child\n", (int) getpid());
+      char* myargs[2];
+
+      myargs[0] = strdup("datagen");
+      myargs[1] = NULL;
+
+      execvp(myargs[0], myargs);
+    }
+    else {  // parent
+      fprintf(stdout, "[%d]: parent\n", (int) getpid());
+      wait(NULL);
+    }
 
     /* TODO: implement code for your experiments using data provided by datagen and your
      * serial and parallel versions of binsearch.
@@ -92,7 +111,8 @@ int main(int argc, char** argv) {
     // Time elapsed in miliseconds.
     double time_elapsed = ((double) (cend - cbegin) / CLOCKS_PER_SEC) * 1000;
 
-    printf("Time elapsed '%lf' [ms].\n", time_elapsed);
+    // printf("ime elapsed '%lf' [ms].\n", time_elapsed);
+    printf("[%d]: Time elapsed '%lf' [ms].\n", (int) getpid(), time_elapsed);
 
     exit(0);
 }
